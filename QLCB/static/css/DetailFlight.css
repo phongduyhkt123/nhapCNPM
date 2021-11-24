@@ -1,0 +1,74 @@
+/*CSS.FormSellTicket*/
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+*{
+padding : 0;
+margin : 0;
+box-sizing: border-box;
+outline : none;
+font-family: 'Roboto', sans-serif;
+}
+.forms h1{
+text-align :center;
+font-size : 70px;
+color : #0941bb ;
+}
+.form{
+margin :0 100px;
+}
+.form-group{
+color : #000000;
+}
+.topic-table{
+padding : 10px 30px 20px ;
+background-color : #add8de;
+margin :0 auto;
+width : 100%;
+}
+.submit-form .sub{
+margin : 5px 50px ;
+background-color: grey;
+border: none;
+color: white;
+padding: 16px 32px;
+text-decoration: none;
+cursor: pointer;
+}
+.table-fixed thead th{
+background: #ae2b2b;
+color : white;
+}
+.table-fixed{
+min-width : 100%;
+}
+.table-fixed thead,
+.table-fixed thead th{
+background: #ae2b2b;
+color : white;
+}
+.table-fixed thead tr th{
+border: 0 !important;
+}
+.table-fixed body tr td:last-child {
+border-right :0;
+}
+.table-fixed tbody td,
+.table-fixed thead tr th {
+float : left;
+font-size : 15px;
+padding-left : 0px !important;
+text-align : center;
+}
+.table-fixed .col{
+width : 33.3%;
+padding-top :5px;
+padding-bottom:5px;
+}
+.table-fixed tbody {
+display : block;
+height : 200px;
+overflow-y :auto;
+color : #1b223c;
+}
+.table-fixed tr{
+display : block;
+}

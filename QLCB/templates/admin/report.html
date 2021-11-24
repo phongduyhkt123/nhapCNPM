@@ -1,0 +1,80 @@
+{% extends 'admin/master.html' %}
+
+{% block body %}
+<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+<!--style="right: 1000px; padding-top: 20px"-->
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class = "col-xl-8 col-lg-8 col-md-10 col-sm-10 col-10">
+            <div class="card card-style mb-2">
+                <div class="card-body">
+                    <div class="chart-container" style="position: relative">
+                        <canvas id="myChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1" style="">
+            <div class="dropdown">
+                 <button class="btn btn-secondary dropdown-toggle float-right" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Statistics by</button>                <ul class="dropdown-menu multi-level " role="menu" aria-labelledby="dropdownMenu">
+                    <li class="dropdown-item"><a href="/admin/reportview">Years</a></li>
+                    <li class="dropdown-divider"></li>
+                    <li class="dropdown-submenu">
+                        <a  class="dropdown-item" tabindex="-1" href="#">Month of the year</a>
+                          <ul class="dropdown-menu">
+                              {% for i in workYear %}
+                            <li class="dropdown-item"><a href="/admin/reportview?year={{i}}&other=month">{{i}}</a></li>
+                              {% endfor %}
+                          </ul>
+                    </li>
+                    <li class="dropdown-submenu ">
+                        <a  class="dropdown-item" tabindex="-1" href="#">Quarter of the year</a>
+                        <ul class="dropdown-menu">
+                            {% for i in workYear %}
+                            <li class="dropdown-item"><a href="/admin/reportview?year={{i}}&other=quarter">{{i}}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+
+    </div>
+</div>
+
+{% block javascript %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js" integrity="sha512-Wt1bJGtlnMtGP0dqNFH1xlkLBNpEodaiQ8ZN5JLA5wpc1sUlk/O5uuOMNgvzddzkpvZ9GLyYNa8w2s7rqiTk5Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" type="text/css" href="http://www.shieldui.com/shared/components/latest/css/light/all.min.css" />
+<script type="text/javascript" src="http://www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
+
+<script>
+    let labels = JSON.parse({{labels | tojson}});
+    let data = JSON.parse( {{data| tojson}});
+    let chartName = JSON.parse({{chartName | tojson }});
+
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: labels,
+        datasets: [{
+            label: "Revenue (VNĐ)",
+            data: data,
+            backgroundColor: 'steelBlue',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        plugins:{
+        title:{
+            display:true ,
+            text: chartName,
+            fontSize:30
+        }
+    }}
+});
+</script>
+{% endblock %}
+{% endblock %}

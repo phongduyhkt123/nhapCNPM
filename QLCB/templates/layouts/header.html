@@ -1,0 +1,54 @@
+<!-- Header -->
+<header class="main-header " id="header">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <nav class="navbar navbar-static-top navbar-expand-md bg-dark navbar-dark">
+        <!-- Sidebar toggle button -->
+        <button id="sidebar-toggler" class="sidebar-toggle">
+            <span class="sr-only">Toggle navigation</span>
+        </button>
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="#">FLY WEBSITE</a>
+        <!-- Navbar links -->
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                {% for t in ticket_types %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/flight-list?type={{t.id}}">{{t.typeName}}</a>
+                </li>
+                {% endfor %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/flight-list">Booking Online</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link text-danger" href="/cart">Cart<span class="badge badge-info"
+                                                                           id="cartCounter">0</span></a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="navbar-right ">
+            <ul class="nav navbar-nav">
+                {% if customer_acc %}
+                <li class="nav-item">
+                    <a class="nav-link text-danger" href="/">{{customer_acc.customerName}}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-text" href="/logout"><i class='bx bxs-log-out-circle bx-sx'></i> Log out</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/login"><i class='bx bxs-log-in-circle bx-sx'></i> Log in</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login"><i class='bx bxs-user-plus bx-sx'></i></i> Sign up</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+</header>

@@ -1,0 +1,33 @@
+{% extends 'admin/master.html' %}
+
+{% block body %}
+{% if current_user.is_authenticated %}
+<div class="container">
+    <h1 class="text-center">Welcome {{ current_user.employeeName }} to the FLY website!</h1>
+    <div style="display:inline-block; text-align: center">
+        <img src="{{ url_for('static', filename='image/img_home.jpg') }}" width="60%">
+        <p class="text-center" style="font-size: 20px"><i>FLY Flight</i></p>
+    </div>
+    {% else %}
+    <div class="row justify-content-center">
+        <h1 class="text-info">LOGIN EMPLOYEE PAGE</h1>
+    </div>
+
+    <div class="row justify-content-center">
+        <form action="/login-admin" method="post">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" class="form-control" placeholder="Enter username"
+                       style="border: 2px solid lightBlue" id="username" name="username">
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" class="form-control" placeholder="Enter password"
+                       style="border: 2px solid lightBlue" id="password" name="password">
+            </div>
+            <button type="submit" class="btn btn-primary btn-info float-right">Log in</button>
+        </form>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

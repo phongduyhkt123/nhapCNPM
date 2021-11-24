@@ -1,0 +1,65 @@
+{% extends 'layouts/baseEmp.html' %}
+{% block header %}
+
+{% endblock %}
+{% block content %}
+
+<div class="profile-content-right py-5">
+    <ul class="nav nav-tabs px-3 px-xl-5 nav-style-border" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="settings-tab" data-toggle="tab" href="#settings"
+               role="tab" aria-controls="settings" aria-selected="false">Personal information</a>
+        </li>
+    </ul>
+    <div class="tab-content px-3 px-xl-5" id="myTabContent">
+
+        <div class="tab-pane fade show active" id="settings" role="tabpanel"
+             aria-labelledby="settings-tab">
+            <div class="mt-5">
+                <form>
+                    <div class="form-group mb-4">
+                        <label for="fullName">Full name</label>
+                        <input type="text" class="form-control" id="fullName" value="{{ current_user.employeeName }}" placeholder="Enter full name">
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label for="userName">Username</label>
+                        <input type="text" class="form-control" id="userName" placeholder="Enter user name">
+
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label for="numberPhone">Number phone</label>
+                        <input type="text" class="form-control" id="numberPhone" placeholder="Enter number phone">
+
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" placeholder="Enter email">
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label for="oldPassword">Old password</label>
+                        <input type="password" class="form-control" id="oldPassword" placeholder="Enter old password">
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label for="newPassword">New password</label>
+                        <input type="password" class="form-control" id="newPassword" placeholder="Enter new password">
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label for="conPassword">Confirm password</label>
+                        <input type="password" class="form-control" id="conPassword" placeholder="Confirm password">
+                    </div>
+
+                    <div class="d-flex justify-content-end mt-5">
+                        <button type="submit" class="btn btn-primary mb-2 btn-pill">Update information</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
