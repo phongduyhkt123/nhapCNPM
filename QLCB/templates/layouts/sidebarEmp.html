@@ -1,10 +1,11 @@
 <aside class="left-sidebar bg-sidebar">
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+
     <div id="sidebar" class="sidebar sidebar-with-footer">
 
         <!-- Aplication Brand -->
         <div class="app-brand">
-            <a href="/" title="Dashboard">
+            <a href="/homeEmp" title="Dashboard">
                 <div class="logo-details">
                     <i class='bx bxs-plane-alt bx-md' style='margin-top: 16pt; color:#ffffff'></i>
                 </div>
@@ -18,13 +19,30 @@
             <!-- sidebar menu -->
             <ul class="nav sidebar-inner" id="sidebar-menu">
                 <li class="has-sub active expand">
-                    <a class="sidenav-item-link" href="/search"
+                    <a class="sidenav-item-link" href="/flight-list"
                        aria-expanded="false" aria-controls="tables">
                         <i class='bx bx-search-alt' style='color:#ffffff'></i>
-                        <span class="nav-text">Flight search</span>
+                        <span class="nav-text">Flight list</span>
                     </a>
                 </li>
+
                 <li class="has-sub active expand">
+                    <a class="sidenav-item-link" href="/manage-flight-route"
+                       aria-expanded="false" aria-controls="tables">
+                        <i class='bx bxs-plane' style='color:#ffffff'></i>
+                        <span class="nav-text">Flight route</span>
+                    </a>
+                </li>
+
+                <li class="has-sub active expand">
+                    <a class="sidenav-item-link" href="/customer"
+                       aria-expanded="false" aria-controls="tables">
+                        <i class='bx bxs-user-account' style='color:#ffffff'></i>
+                        <span class="nav-text">Customer</span>
+                    </a>
+                </li>
+
+                <!--<li class="has-sub active expand">
                     <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse"
                        data-target="#forms"
                        aria-expanded="false" aria-controls="forms">
@@ -35,27 +53,43 @@
                         data-parent="#sidebar-menu">
                         <div class="sub-menu">
                             <li>
-                                <a class="sidenav-item-link" href="/manage-flight">
-                                    <span class="nav-text">Flight of the day</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="sidenav-item-link" href="/manage-flight">
+                                <a class="sidenav-item-link" href="/manage-flight-route">
                                     <span class="nav-text">Flight routes</span>
                                 </a>
                             </li>
                         </div>
                     </ul>
-                </li>
-
-                <li class="has-sub active expand">
-                    <a class="sidenav-item-link" href="/profile"
-                       aria-expanded="false" aria-controls="charts">
-                        <i class='bx bxs-user-circle' style='color:#ffffff'></i>
-                        <span class="nav-text" style="color:#ffffff'">Admin</span>
-                    </a>
-                </li>
+                </li>-->
             </ul>
+            <ul class="nav sidebar-inner custom-sidebar">
+        {% if employee_acc %}
+        <li class="has-sub active expand">
+          <a class="sidenav-item-link text-white" href="/profile">
+            <i class='bx bxs-user-circle' style='color:#ffffff'></i>
+            <span class="nav-text">{{employee_acc.employeeName}}</span>
+          </a>
+        </li>
+        <li class="has-sub active expand">
+          <a class="nav-text" href="/logout">
+            <i class='bx bxs-log-out-circle bx-sx' style='color:#ffffff'></i>
+            <span class="nav-text"> Log out</span>
+          </a>
+        </li>
+        {% else %}
+        <li class="has-sub active expand">
+          <a class="nav-link" href="/login">
+            <i class='bx bxs-log-in-circle bx-sx' style='color:#ffffff'></i>
+            <span class="nav-text"> Log in</span>
+          </a>
+        </li>
+        <li class="has-sub active expand">
+          <a class="nav-link" href="/login">
+            <i class='bx bxs-user-plus bx-sx' style='color:#ffffff'></i>
+            <span class="nav-text"> Sign up</span>
+          </a>
+        </li>
+        {% endif %}
+      </ul>
         </div>
     </div>
 </aside>

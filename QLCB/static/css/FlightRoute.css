@@ -1,21 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-
 *{
     padding : 0;
     margin : 0;
     box-sizing: border-box;
     outline : none;
-    font-family: 'Roboto', sans-serif;
+}
+h2{
+text-align :center;
+padding : 10px;
+font-size : 30px;
+color : #1b223c;
 }
 
-.forms h1{
-    text-align :center;
-    font-size : 70px;
-    margin-bottom : 50px;
-    color : #0941bb ;
-}
 .form{
-    margin :0 100px 0 100px;
+    margin :0 100px;
 }
 .form-group{
     color : #000000;
@@ -27,56 +24,55 @@
     width : 100%;
     font-size : 15px;
 }
-/*CAC NUT SUBMIT*/
-.submit-form .sub{
-    margin : 10px 0 10px 250px ;
-    background-color: grey;
-    border: none;
-    color: white;
-    padding: 10px 50px;
-    text-decoration: none;
-    cursor: pointer;
-}
+
 /*CSS.TABLE*/
 .table-fixed thead th{
-
     text-align : center;
-    border: 1px solid;
-    padding : 5px 0 5px 0;
+    padding : 5px 0;
 
 }
 .table-fixed{
-    margin-left:14px;
-    min-width : 97.1%;
+    min-width : 100%;
 }
 .table-fixed thead,
-.table-fixed thead  th{
-    background: #ae2b2b;
+.table-fixed thead th{
+    background: #1b223c;
     color : white;
+}
 
-}
-.table-fixed thead tr th{
-    border: 0 !important;
-}
-.table-fixed body tr td:last-child {
-    border-right :0;
-
-}
 .table-fixed tbody td,
-.table-fixed thead tr th {
-    float : left;
+.table-fixed thead th {
     font-size : 15px;
     text-align : center;
 }
-.table-fixed .col{
-    width : 33.3%;
+
+.table-fixed tbody td{
+    float : left;
+    display: block;
+}
+
+.table-fixed .col1{
+    width : 5%;
+    height: 20%;
+}
+.table-fixed .col2{
+    width : 18%;
+    height: 20%;
+}
+.table-fixed .col3{
+    width : 19%;
+    height: 20%;
+}
+.table-fixed .col4{
+    width : 20%;
+    height: 20%;
 }
 .table-fixed tbody {
     display : block;
     height : 250px;
     overflow-y :auto;
-    color : #000000;
+    color : #1b223c;
 }
 .table-fixed tr{
-    display : block;
+    display: block;
 }

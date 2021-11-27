@@ -7,34 +7,22 @@ box-sizing: border-box;
 outline : none;
 font-family: 'Roboto', sans-serif;
 }
-.forms h1{
-text-align :center;
-font-size : 70px;
-color : #0941bb ;
+
+h2{
+text-align :left;
+padding : 10px 0;
+font-size : 30px;
+color : #1b223c;
 }
 .form{
-margin :0 100px;
+margin: 0 100px;
 }
 .form-group{
 color : #000000;
 }
-.topic-table{
-padding : 10px 30px 20px ;
-background-color : #add8de;
-margin :0 auto;
-width : 100%;
-}
-.submit-form .sub{
-margin : 5px 50px ;
-background-color: grey;
-border: none;
-color: white;
-padding: 16px 32px;
-text-decoration: none;
-cursor: pointer;
-}
+
 .table-fixed thead th{
-background: #ae2b2b;
+background: #1b223c;
 color : white;
 }
 .table-fixed{
@@ -42,7 +30,7 @@ min-width : 100%;
 }
 .table-fixed thead,
 .table-fixed thead th{
-background: #ae2b2b;
+background: #1b223c;
 color : white;
 }
 .table-fixed thead tr th{
@@ -59,7 +47,7 @@ padding-left : 0px !important;
 text-align : center;
 }
 .table-fixed .col{
-width : 33.3%;
+width : 25%;
 padding-top :5px;
 padding-bottom:5px;
 }

@@ -1,33 +1,41 @@
-{% extends 'admin/master.html' %}
+{% extends 'layouts/baseEmp.html' %}
 
-{% block body %}
-{% if current_user.is_authenticated %}
-<div class="container">
-    <h1 class="text-center">Welcome {{ current_user.employeeName }} to the FLY website!</h1>
-    <div style="display:inline-block; text-align: center">
-        <img src="{{ url_for('static', filename='image/img_home.jpg') }}" width="60%">
-        <p class="text-center" style="font-size: 20px"><i>FLY Flight</i></p>
-    </div>
-    {% else %}
-    <div class="row justify-content-center">
-        <h1 class="text-info">LOGIN EMPLOYEE PAGE</h1>
-    </div>
+{% block content %}
+<link href="{{ url_for('static', filename='css/loginEmp.css') }}" rel="stylesheet">
 
-    <div class="row justify-content-center">
-        <form action="/login-admin" method="post">
-            <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" class="form-control" placeholder="Enter username"
-                       style="border: 2px solid lightBlue" id="username" name="username">
+<div class="row">
+    <div class="col-md-6 mx-auto p-0">
+        <div class="card">
+            <div class="login-box">
+                    <div class="login-space">
+                        <form action="" method="post">
+                            <div class="login">
+                                <div class="group"><label class="label">Phone</label> <input name="phone" type="text"
+                                                                                             class="input"
+                                                                                             placeholder="Enter your phone"
+                                                                                             required></div>
+                                <div class="group"><label class="label">Password</label> <input name="password"
+                                                                                                type="password"
+                                                                                                class="input"
+                                                                                                data-type="password"
+                                                                                                placeholder="Enter your password"
+                                                                                                required></div>
+                                <div class="group"><input id="check" type="checkbox" class="check" checked> <label
+                                        for="check"><span class="icon"></span> Keep me Signed in</label></div>
+                                <div class="group"><input type="submit" class="button" value="Sign In"></div>
+                                {% if error %}
+                                <div class="alert alert-danger text-center"> {{error}}</div>
+                                {% endif %}
+                                <div class="hr"></div>
+
+                                <div class="foot"><a href="/login">Forgot Password?</a></div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" class="form-control" placeholder="Enter password"
-                       style="border: 2px solid lightBlue" id="password" name="password">
-            </div>
-            <button type="submit" class="btn btn-primary btn-info float-right">Log in</button>
-        </form>
+        </div>
     </div>
-    {% endif %}
 </div>
+
 {% endblock %}

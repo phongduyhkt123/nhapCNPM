@@ -1,0 +1,77 @@
+.form-control:focus {
+    box-shadow: none;
+    border-color: #1b223c;
+}
+
+.profile-button, .pw-button {
+    background: #1b223c;
+    box-shadow: none;
+    border: none
+}
+
+.profile-button:hover, .pw-button:hover {
+    background: #1b223c;
+}
+
+.profile-button:focus, .pw-button: focus {
+    background: #1b223c;
+    box-shadow: none
+}
+
+.profile-button:active, .pw-button: active {
+    background: #1b223c;
+    box-shadow: none
+}
+
+.custom-buttom{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: #1b223c !important;
+    border: none;
+}
+
+.custom-buttom input {
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.back:hover {
+    color: #1b223c;
+    cursor: pointer
+}
+h3{
+    color: #1b223c;
+}
+h5 {
+    font-family: "Roboto", sans-serif;
+    font-size: 14px;
+    color: #1b223c;
+}
+
+.custom-form .profile-info h3{
+    width: 100%;
+    text-align: center;
+}
+
+.custom-form input{
+    margin-bottom: 10px !important;
+    margin-top: 5px !important;
+}
+
+.add-experience:hover {
+    background: #BA68C8;
+    color: #fff;
+    cursor: pointer;
+    border: solid 1px #BA68C8
+}
+#avt {
+    width: 200px;
+    height: 300px;
+}

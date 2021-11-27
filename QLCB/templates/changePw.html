@@ -1,13 +1,11 @@
-{% extends 'layouts/baseEmp.html' %}
-{% block header %}
+{% extends 'layouts/baseCus.html' %}
 
-{% endblock %}
 {% block content %}
 
 <div class="profile-content-right py-5">
     <ul class="nav nav-tabs px-3 px-xl-5 nav-style-border" id="myTab" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" id="settings-tab" data-toggle="tab" href="#settings"
+            <a class="nav-link active" id="settings-tab" data-toggle="tab" href="/profile"
                role="tab" aria-controls="settings" aria-selected="false">Personal information</a>
         </li>
     </ul>
@@ -20,12 +18,6 @@
                     <div class="form-group mb-4">
                         <label for="fullName">Full name</label>
                         <input type="text" class="form-control" id="fullName" value="{{ current_user.employeeName }}" placeholder="Enter full name">
-                    </div>
-
-                    <div class="form-group mb-4">
-                        <label for="userName">Username</label>
-                        <input type="text" class="form-control" id="userName" placeholder="Enter user name">
-
                     </div>
 
                     <div class="form-group mb-4">

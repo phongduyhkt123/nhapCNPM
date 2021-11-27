@@ -1,6 +1,5 @@
 .dropdown{
     position: relative;
-    left: 30px;
 }
 
 .dropdown-submenu {
@@ -51,6 +50,10 @@
     border-radius: 5px 0 5px 5px;
 }
 
-canvas#myChart {
+.row button {
+    margin-bottom: 150px;
+}
+
+canvas#myChart, canvas#myChart2{
   background-color: #d7e4f5;
 }

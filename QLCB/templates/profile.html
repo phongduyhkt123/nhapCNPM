@@ -1,0 +1,61 @@
+{% if isEmp %}
+{% extends 'layouts/baseEmp.html' %}
+{% else %}
+{% extends 'layouts/baseCus.html' %}
+{% endif %}
+
+{% block content %}
+<link href="{{ url_for('static', filename='css/profile.css') }}" rel="stylesheet">
+
+<div class="container rounded bg-white">
+    <form action="" method="post" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-md-4 border-right">
+                <div class="d-flex flex-column align-items-center p-3 py-5">
+                    <img id="avt" class="mt-5 img-fluid" src="{{customer.avatar}}">
+                </div>
+                <div class="d-flex flex-column align-items-center">
+                    <div class="btn btn-info custom-buttom">
+                        <p>Upload your photo</p>
+                        <input name="avatar" style="width: 250px" type="file">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7 border-right custom-form">
+                <div class="p-3 py-5">
+                    {% if mes %}
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="text-danger text-center">{{mes[0]}}</h5>
+                    </div>
+                    {% endif %}
+                    <div class="d-flex justify-content-between align-items-center mb-3 profile-info">
+                        <h3 class="text-center">Profile Information</h3>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12"><h5 class="labels">Name</h5>
+                            <input type="text" name="name" class="form-control" placeholder="Enter your name" value="{{customer.customerName}}" required>
+                        </div>
+                        <div class="col-md-12"><h5 class="labels">Phone Number</h5>
+                            <input type="text" name="phone" class="form-control" placeholder="Enter phone number" value="{{customer.phone}}" required>
+                        </div>
+                        <div class="col-md-12"><h5 class="labels">Address</h5>
+                            <input type="text" name="address" class="form-control" placeholder="Enter address" value="{{customer.address}}">
+                        </div>
+                        <div class="col-md-12"><h5 class="labels">Gender</h5>
+                            <input type="text" name="gender" class="form-control" placeholder="Gender" value="{{customer.gender}}">
+                        </div>
+                        <div class="col-md-12"><h5 class="labels">ID NO</h5>
+                            <input type="text" name="idNo" class="form-control" placeholder="enter idNo" value="{{customer.idNo}}">
+                        </div>
+                    </div>
+                    <div class="mt-5 text-center">
+                        <button class="btn btn-primary profile-button" type="submit">Save Profile</button>
+                        <button class="btn btn-primary pw-button" href="/changePw">Change Password</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

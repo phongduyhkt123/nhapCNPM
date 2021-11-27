@@ -11,11 +11,15 @@ import json
 
 class AuthenticatedModelView(ModelView):
     def is_accessible(self):
-        return current_user.is_authenticated
+        if not current_user.is_authenticated:
+            return False
+        return current_user.role.roleName == 'Admin'
 
 class AuthenticatedBaseView(BaseView):
     def is_accessible(self):
-        return current_user.is_authenticated
+        if not current_user.is_authenticated:
+            return False
+        return current_user.role.roleName == 'Admin'
 
 class RoleModelView(AuthenticatedModelView):
     column_exclude_list = ('employees')
@@ -218,24 +222,43 @@ class ReportView(AuthenticatedBaseView):
         year = request.args.get('year')
         other = request.args.get('other')
         if year and other == 'month':
-            report = utils.report_monthOfYear(year=int(year))
+            revenue_report = utils.report_monthOfYear(year=int(year))
+            ticket_report = utils.report_tickets_months(year=int(year))
             chartName = "Monthly statistics of " + year
         elif year and other == 'quarter':
-            report = utils.report_quarterOfYear(year=int(year))
+            revenue_report = utils.report_quarterOfYear(year=int(year))
+            ticket_report = utils.report_tickets_quarter(year=int(year))
             chartName = "Quarter statistics of " + year
         else:
-            report = utils.report_allYear()
+            revenue_report = utils.report_allYear()
+            ticket_report = utils.report_tickets_year()
             chartName = "Statistics by all year"
 
-        labels = list(report.keys())
+        reveue_labels = list(data[0] for data in revenue_report)
 
-        data = list(report.values())
+        revenue_data = list(data[1] for data in revenue_report)
+
+        ticket = {}
+        ticket_labels = []
+        for i in ticket_report:
+            try:
+                if not i[0] in ticket_labels:
+                    ticket_labels.append(i[0])
+                ticket[i[1]].append(i[2])
+            except:
+                ticket[i[1]] = [i[2]]
+        print(ticket)
+        ticket_data = list(ticket.values())
+        ticket_type = list(ticket.keys())
 
         workYear = utils.getYear()
 
         return self.render('admin/report.html',
-                           labels=json.dumps(labels),
-                           data=json.dumps(data),
+                           revenue_labels=json.dumps(reveue_labels),
+                           ticket_labels=json.dumps(ticket_labels),
+                           revenue_data=json.dumps(revenue_data),
+                           ticket_data=json.dumps(ticket_data),
+                           ticket_type=json.dumps(ticket_type),
                            workYear=workYear,
                            chartName=json.dumps(chartName)
                            )
