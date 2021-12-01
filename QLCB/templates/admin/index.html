@@ -1,7 +1,7 @@
 {% extends 'admin/master.html' %}
 
 {% block body %}
-{% if current_user.is_authenticated %}
+{% if current_user.is_authenticated and current_user.role.roleName=="Admin" %}
 <div class="container">
     <h1 class="text-center">Welcome {{ current_user.employeeName }} to the FLY website!</h1>
     <div style="display:inline-block; text-align: center">

@@ -59,9 +59,9 @@ def login():
 
 @app.route('/login-employee', methods=['post', 'get'])
 def login_employee():
-    if request.method == 'GET':
-        return render_template('employee/login.html')
-    if not current_user.is_authenticated:
+    if not current_user.is_authenticated :
+        if request.method == 'GET':
+            return render_template('employee/login.html')
         username = request.form.get('username')
         password = request.form.get('password')
         password = sha256((password + username).encode('utf-8')).hexdigest()
@@ -72,7 +72,7 @@ def login_employee():
             login_user(employee_user)
         else:
             return 'login failed!'
-    return redirect(request.args.get('next') if request.args.get('next') else '/')
+    return redirect(request.args.get('next') if request.args.get('next') else '/employee')
 
 
 @app.route('/login', methods=['get', 'post'])
@@ -113,12 +113,12 @@ def signup():
 @app.route('/logout')
 def logout_customer():
     session['customer_acc'] = None
-    return redirect('/')
+    return redirect('/customer')
 
 @app.route('/logout-employee')
 def logout_employee():
     logout_user()
-    return redirect('/')
+    return redirect('/employee')
 
 @app.context_processor
 def common_context():
@@ -272,6 +272,14 @@ def book_online(fid):
 def change_password():
      return render_template('/changePw.html')
 
+@app.route('/profileEmp', methods=['post', 'get'])
+@login_employee_required
+def edit_employee_profit():
+    mes = []
+    if request.method == 'POST':
+        pass
+    return render_template('/profileEmp.html',isEmp=True,mes=mes)
+
 @app.route('/profile', methods=['post', 'get'])
 @login_customer_required
 def edit_customer_profit():
@@ -296,7 +304,7 @@ def edit_customer_profit():
 
 @app.errorhandler(404)
 def not_found(e):
-    return render_template('404.html')
+    return render_template('/404.html')
 
 if __name__ == '__main__':
     app.run(debug= True)

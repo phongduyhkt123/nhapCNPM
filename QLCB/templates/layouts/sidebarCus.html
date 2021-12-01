@@ -18,45 +18,31 @@
 
       <!-- sidebar menu -->
       <ul class="nav sidebar-inner" id="sidebar-menu">
+
         <li class="has-sub active expand">
-          <a class="sidenav-item-link" href="/pay">
-            <i class='bx bxs-basket' style='color:#ffffff'></i>
-            <span class="nav-text">Unpaid cart</span></b>
+          <a class="sidenav-item-link" href="/search"
+             aria-expanded="false" aria-controls="flight-list">
+            <i class='bx bx-list-ol' style='color:#ffffff'></i>
+            <span class="nav-text">Flight list</span>
           </a>
         </li>
 
         <li class="has-sub active expand">
           <a class="sidenav-item-link" href="/search"
              aria-expanded="false" aria-controls="tables">
-            <i class='bx bx-search-alt' style='color:#ffffff'></i>
-            <span class="nav-text">Flight search</span>
+            <i class='bx bxs-cart-add' style='color:#ffffff'></i>
+            <span class="nav-text">Booking online</span>
           </a>
         </li>
 
         <li class="has-sub active expand">
-          <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse"
-             data-target="#forms"
-             aria-expanded="false" aria-controls="forms">
-            <i class='bx bxs-plane' style='color:#ffffff'></i>
-            <span class="nav-text">Flights</span>
-            <b class="caret"></b>
+          <a class="sidenav-item-link" href="/search"
+             aria-expanded="false" aria-controls="tables">
+            <i class='bx bxs-cart-add' style='color:#ffffff'></i>
+            <span class="nav-text">Booking history</span>
           </a>
-          <ul class="collapse" id="forms"
-              data-parent="#sidebar-menu">
-            <div class="sub-menu">
-              <li>
-                <a class="sidenav-item-link" href="/flight-list">
-                  <span class="nav-text">Booking online</span>
-                </a>
-              </li>
-              <li>
-                <a class="sidenav-item-link" href="/manage-flight-route">
-                  <span class="nav-text">Flight routes</span>
-                </a>
-              </li>
-            </div>
-          </ul>
         </li>
+
       </ul>
       <ul class="nav sidebar-inner custom-sidebar">
         {% if customer_acc %}

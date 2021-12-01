@@ -233,13 +233,14 @@ def get_customers(id=None):
 
     return customers.all()
 
-def edit_customer(id, name, phone, idNo, gender, address, avatar, error):
+def edit_customer(id, name, phone, age, idNo, gender, address, avatar, error):
     customer = get_customers(id)
     customer.customerName = name
     customer.phone = phone
-    customer.address = address
+    customer.age = age
     customer.idNo = idNo
     customer.gender = gender
+    customer.address = address
     customer.avatar = avatar if avatar else customer.avatar
     try:
         db.session.commit()

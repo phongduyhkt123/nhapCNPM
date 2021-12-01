@@ -1,4 +1,4 @@
-{% extends 'layouts/baseCus.html' %}
+{% extends 'layouts/baseEmp.html' %}
 
 {% block content %}
 <link href="{{ url_for('static', filename='css/profile.css') }}" rel="stylesheet">
@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-md-4 border-right">
                 <div class="d-flex flex-column align-items-center p-3 py-5">
-                    <img id="avt" class="mt-5 img-fluid" src="{{customer.avatar}}">
+                    <img id="avt" class="mt-5 img-fluid" src="">
                 </div>
                 <div class="d-flex flex-column align-items-center">
                     <div class="btn btn-info custom-buttom">
@@ -29,31 +29,26 @@
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-12"><h5 class="labels">Name</h5>
-                            <input type="text" name="name" class="form-control" placeholder="Enter your name" value="{{customer.customerName}}" required>
+                            <input type="text" name="name" class="form-control" placeholder="Enter your name" value="{{current_user.employeeName}}" required>
                         </div>
-                        <div class="col-md-12"><h5 class="labels">Phone Number</h5>
-                            <input type="text" name="phone" class="form-control" placeholder="Enter phone number" value="{{customer.phone}}" required>
+                        <div class="col-md-12"><h5 class="labels">Userame</h5>
+                            <input type="text" name="username" class="form-control" placeholder="Enter username" value="{{current_user.username}}" required>
                         </div>
-                        <div class="col-md-12"><h5 class="labels">Age</h5>
-                            <input type="text" name="age" class="form-control"
-                                   {% if customer.age %}
-                                   value="{{customer.age}}"
-                                   {% else %}
-                                   value="0"
-                                   {% endif %}
-                                   placeholder="Enter age">
+                        <div class="col-md-12"><h5 class="labels">Email</h5>
+                            <input type="text" name="email" class="form-control" placeholder="Enter phone email" value="{{current_user.email}}" required>
+                        </div>
+                        <div class="col-md-12"><h5 class="labels">Role</h5>
+                            <input type="text" name="role" class="form-control" placeholder="Enter address" value="{{current_user.role.roleName}}" readonly>
                         </div>
                         <div class="col-md-12"><h5 class="labels">Gender</h5>
-                            <input type="text" name="gender" class="form-control" placeholder="Gender" value="{{customer.gender}}">
+                            <input type="text" name="gender" class="form-control" placeholder="Gender" value="{{current_user.gender}}">
                         </div>
-                        <div class="col-md-12"><h5 class="labels">ID NO</h5>
-                            <input type="text" name="idNo" class="form-control" placeholder="enter idNo" value="{{customer.idNo}}">
-                        </div>
-                        <div class="col-md-12"><h5 class="labels">Address</h5>
-                            <input type="text" name="address" class="form-control" placeholder="Enter address" value="{{customer.address}}">
+                        <div class="col-md-12"><h5 class="labels">Date of birth</h5>
+                            <input type="text" name="dob" class="form-control" placeholder="Enter date of birth" value="{{current_user.dob}}">
                         </div>
                     </div>
                     <div class="mt-5 text-center">
+
                         <button class="btn btn-primary profile-button" type="submit">Save Profile</button>
                         <button class="btn btn-primary pw-button" href="/changePw">Change Password</button>
                     </div>

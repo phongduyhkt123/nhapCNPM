@@ -18,8 +18,7 @@
     background: rgba(30, 40, 50, .85)
 }
 
-.login-snip .login,
-.login-snip .sign-up-form {
+.login-snip .login {
     top: 0;
     left: 0;
     right: 0;
@@ -30,26 +29,16 @@
     transition: all .4s linear
 }
 
-.login-snip .sign-in,
-.login-snip .sign-up,
 .login-space .group .check {
     display: none
 }
 
-.login-snip .tab {
+.login-snip h2 {
     font-size: 22px;
     font-family: "Roboto", sans-serif;
-    margin-right: 15px;
-    padding-bottom: 5px;
-    margin: 0 15px 10px 0;
-    display: inline-block;
-    border-bottom: 2px solid transparent
-}
-
-.login-snip .sign-in:checked+.tab,
-.login-snip .sign-up:checked+.tab {
-    color: #fff;
-    border-color: #1b223c
+    text-align: center;
+    margin: 0 10px;
+    color: #ffffff;
 }
 
 .login-space {
@@ -60,7 +49,7 @@
 }
 
 .login-space .group {
-    margin-bottom: 15px
+    margin-bottom: 20px
 }
 
 .login-space .group .label,
@@ -142,11 +131,7 @@
     transform: scale(1) rotate(-45deg)
 }
 
-.login-snip .sign-in:checked+.tab+.sign-up+.tab+.login-space .login {
-    transform: rotate(0)
-}
-
-.login-snip .sign-up:checked+.tab+.login-space .sign-up-form {
+.login-snip .login-space .login {
     transform: rotate(0)
 }
 
