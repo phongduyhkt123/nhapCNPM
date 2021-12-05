@@ -422,6 +422,7 @@ def edit_customer_profile():
     customer = utils.get_customers(id)
     return render_template('/profile.html', customer=customer, err=error)
 
+
 @app.route('/about-us')
 def about_us():
     isEmp = request.args.get('isEmp')
