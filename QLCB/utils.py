@@ -138,20 +138,6 @@ def count_flights():
     return Flights.query.count()
 
 
-def cart_stats(cart=None):
-    total_quantity, total_amount = 0, 0
-
-    if cart:
-        for p in cart.values():
-            total_quantity += p["quantity"]
-            total_amount += p["quantity"]*p["priceE"]
-
-    return {
-        "total_quantity": total_quantity,
-        "total_amount": total_amount
-    }
-
-
 def add_booking(noBusinessClass, noEconomyClass, customer, employee, flight, pay_method, orderKey, status):
     import datetime
     bookTime = datetime.datetime.now()

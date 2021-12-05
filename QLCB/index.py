@@ -13,13 +13,17 @@ import base64
 from flask_login import current_user, login_user, login_required
 from QLCB.adminis import *
 
+@app.route('/')
+def home():
+    return redirect(url_for('homeCus'))
+
 @app.route('/customer')
 def homeCus():
     return render_template('/homeCus.html')
 
 @app.route('/employee')
 def homeEmp():
-    return render_template('/homeEmp.html')
+    return render_template('employee/homeEmp.html')
 
 @login.user_loader
 def load_usr(id):
@@ -168,30 +172,9 @@ def common_context():
         "customer_acc": customer_acc
 }
 
-@app.route('/manage-flight-list', methods=['post', 'get'])
-def manage_flight_list():
-    flights = utils.get_flights(start=int(request.form.get("start", 0)),
-                                destination=int(request.form.get("destination", 0)),
-                                page=request.args.get("page", 1),
-                                takeOffTime=request.form.get("takeOffTime"))
-    slots = {}
-    for f in flights[0]:
-        slots[f.id] = utils.get_slot_remain(f.id)
-
-    page_num = math.ceil(flights[1] / app.config["PAGE_SIZE"])
-    airport_name = utils.get_airports_name()
-
-    return render_template('flight-list.html',
-                           airport_name=airport_name,
-                           flights=flights[0],
-                           date_rule=utils.get_rules(name="MAX_DATE_ALLOWED_BOOKING_BEFORE_TAKEOFF").value,
-                           page_num=page_num,
-                           page_cur=request.args.get("page", 1),
-                           isEmp=True,
-                           slots=slots)
-
 @app.route('/flight-list', methods=['post', 'get'])
 def show_flight():
+    isEmp = request.args.get("isEmp")
     flights = utils.get_flights(start=int(request.form.get("start", 0)),
                                 destination=int(request.form.get("destination", 0)),
                                 page=request.args.get("page", 1),
@@ -209,13 +192,14 @@ def show_flight():
                            date_rule=utils.get_rules(name="MAX_DATE_ALLOWED_BOOKING_BEFORE_TAKEOFF").value,
                            page_num=page_num,
                            page_cur=request.args.get("page", 1),
+                           isEmp=isEmp,
                            slots=slots)
 
 @app.route('/manage-flight-route')
 @login_employee_required
 def route():
     flights = utils.get_flights(flew=True)
-    return render_template('/manage-flight-route.html', isEmp=True, list_route=flights)
+    return render_template('employee/manage-flight-route.html', isEmp=True, list_route=flights)
 
 @app.route('/booking/<fid>', methods=['GET', 'POST'])
 @login_employee_required
@@ -321,17 +305,6 @@ def book_history():
     return render_template('booking-history.html',
                     book_list=book_list)
 
-@app.route('/manage-flight/<id>')
-def schedule_employee(id):
-    flight = utils.get_flights(id=id)
-    slot = utils.get_slot_remain(id)
-    stopovers = utils.get_stopover_detail(fid=id)
-    return render_template('schedule.html',
-                           flight=flight,
-                           slot=slot,
-                           isEmp=True,
-                           stopovers=stopovers)
-
 @app.route('/flight-detail/<id>')
 def schedule_customer(id):
     isEmp = request.args.get("isEmp")
@@ -420,7 +393,7 @@ def edit_employee_profile():
             if data['avatar']:
                 cloudinary.uploader.destroy(info['public_id'])
 
-    return render_template('/profileEmp.html', isEmp=True, mes=mes)
+    return render_template('employee/profileEmp.html', isEmp=True, mes=mes)
 
 @app.route('/profile', methods=['post', 'get'])
 @login_customer_required
@@ -454,9 +427,6 @@ def about_us():
     isEmp = request.args.get('isEmp')
     return render_template('/about-us.html', isEmp=isEmp)
 
-@app.errorhandler(404)
-def not_found(e):
-    return render_template('/404.html')
 
 if __name__ == '__main__':
-    app.run(debug= True)
+    app.run(debug= True, host="0.0.0.0", port=5000)

@@ -92,7 +92,7 @@
         {% for i in range(1, page_num + 1) %}
         <li class="page-item"><a id="page{{i}}"
                                  {% if isEmp %}
-                                 href="manage-flight-list?page={{i}}"
+                                 href="flight-list?page={{i}}?isEmp=1"
                                  {% else %}
                                  href="flight-list?page={{i}}"
                                  {% endif %}
