@@ -7,7 +7,7 @@ from urllib.request import urlopen, Request
 from pymysql import Date
 from sqlalchemy import func, extract
 
-from models import BookDetails, Tickets, Flights, TicketTypes, Airports, PaymentMethods, Employees, Customers, \
+from QLCB.models import BookDetails, Tickets, Flights, TicketTypes, Airports, PaymentMethods, Employees, Customers, \
     Stopovers, StopoverDetails, Rules
 from QLCB import db, app
 from flask_login import current_user
@@ -250,10 +250,12 @@ def add_customer(name, phone, password, dob=None, gender=None, idNo=None, addres
         print(ex.args)
         return False
 
-def get_customers(id=None):
+def get_customers(id=None, phone=None):
     customers = Customers.query
     if id:
         return customers.get(int(id))
+    if phone:
+        return customers.filter(Customers.phone == phone).first()
     return customers.all()
 
 def edit_customer(id, name, dob, gender, idNo, phone, address, avatar, error):
@@ -273,10 +275,12 @@ def edit_customer(id, name, dob, gender, idNo, phone, address, avatar, error):
         return False
     return True
 
-def get_employees(id=None):
+def get_employees(id=None, phone = None):
     employees = Employees.query
     if id:
         return employees.get(int(id))
+    if phone:
+        return employees.filter(Employees.phone == phone).first()
     return employees.all()
 
 def edit_employee(employee, username, employeeName, dob, gender, idNo, email, phone, address, avatar, error):
@@ -328,7 +332,7 @@ def get_tickets(cid=None):
 def get_slot_remain(fid):
     b, e = db.session.query(func.sum(BookDetails.noBusinessClass),
                          func.sum(BookDetails.noEconomyClass))\
-        .filter(BookDetails.idFlight == fid, BookDetails.status == 1).one()
+        .filter(BookDetails.idFlight == fid, BookDetails.status == 1).first()
     return {
         "economy": e if e else 0,
         "business": b if b else 0
@@ -377,6 +381,6 @@ def employee_change_password(employee, newpwd):
 def get_rules(id=None, name=None):
     rules = Rules.query
     if name:
-        return rules.filter(Rules.ruleName == name).one()
+        return rules.filter(Rules.ruleName == name).first()
     if id:
         return rules.get(id)

@@ -1,4 +1,4 @@
-from models import Airports, Flights, Stopovers, StopoverDetails, Roles, Employees, BookDetails, PaymentMethods, \
+from QLCB.models import Airports, Flights, Stopovers, StopoverDetails, Roles, Employees, BookDetails, PaymentMethods, \
     Customers, Tickets, TicketTypes, Rules
 from flask_admin.contrib.sqla import ModelView
 from flask_admin import BaseView, expose, AdminIndexView
@@ -31,8 +31,8 @@ class RoleModelView(AuthenticatedModelView):
     can_create = True
 
 class EmployeeModelView(AuthenticatedModelView):
-    column_exclude_list = ('bookDetails', 'password')
-    form_excluded_columns = ('bookDetails')
+    column_exclude_list = ('bookDetails', 'password', 'avatar')
+    form_excluded_columns = ('bookDetails', 'avatar')
     column_labels = dict(username='Username',
                          password='Password',
                          employeeName='Name',
@@ -48,8 +48,8 @@ class EmployeeModelView(AuthenticatedModelView):
         form.password.data = ''
 
 class CustomerModelView(AuthenticatedModelView):
-    column_exclude_list = ('bookDetails', 'password')
-    form_excluded_columns = ('bookDetails')
+    column_exclude_list = ('bookDetails', 'password', 'avatar')
+    form_excluded_columns = ('bookDetails', 'avatar')
     column_labels = dict(customerName='Name',
                          password='Password',
                          phone='Phone',

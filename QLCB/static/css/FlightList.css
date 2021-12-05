@@ -22,6 +22,7 @@ label, option{
     font-size: 16px;
     color: #1b223c;
 }
+
 .row {
     padding: 0 20px;
 }
@@ -42,18 +43,18 @@ label, option{
     border: none;
 }
 
-.btn-search: hover, .btn-page: hover{
+.btn-search:hover, .btn-page:hover{
     background: #1b223c;
     color: #fff;
 }
 
-.btn-search: focus, .btn-page: focus {
+.btn-search:focus, .btn-page:focus {
     background: #1b223c;
     color: #fff;
     box-shadow: none
 }
 
-.btn-search: active, .btn-page: active {
+.btn-search:active, .btn-page:active {
     background: #1b223c;
     color: #fff;
     box-shadow: none

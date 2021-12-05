@@ -45,7 +45,7 @@
             <ul class="nav sidebar-inner custom-sidebar">
                 {% if current_user.is_authenticated %}
                 <li class="has-sub active expand">
-                    <a class="sidenav-item-link text-white" href="/profileEmp">
+                    <a class="sidenav-item-link text-white" style="font-size: 13px" href="/profileEmp">
                         <i class='bx bxs-user-circle' style='color:#ffffff'></i>
                         <span class="nav-text">{{current_user.employeeName}}</span>
                     </a>
@@ -60,7 +60,7 @@
                 <li class="has-sub active expand">
                     <a class="nav-link" href="/login-employee">
                         <i class='bx bxs-log-in-circle bx-sx' style='color:#ffffff'></i>
-                        <span class="nav-text"> Log in</span>
+                        <span class="nav-text"> Sign in</span>
                     </a>
                 </li>
                 {% endif %}

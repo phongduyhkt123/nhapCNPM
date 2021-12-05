@@ -5,13 +5,13 @@ import cloudinary
 from cloudinary import uploader
 
 from QLCB import app, login
-from models import *
+from QLCB.models import *
 from flask import request, render_template, redirect, session, url_for, flash, jsonify
 from sqlalchemy import and_
 from hashlib import sha256
 import base64
 from flask_login import current_user, login_user, login_required
-from QLCB.admin import *
+from QLCB.adminis import *
 
 @app.route('/customer')
 def homeCus():
@@ -60,7 +60,7 @@ def login():
 
 @app.route('/login-employee', methods=['post', 'get'])
 def login_employee():
-    if not current_user.is_authenticated :
+    if not current_user.is_authenticated:
         if request.method == 'GET':
             return render_template('employee/login.html')
         username = request.form.get('username')
@@ -72,8 +72,43 @@ def login_employee():
         if employee_user:
             login_user(employee_user)
         else:
-            return 'login failed!'
+            return render_template('employee/login.html', error="Login failed!", isEmp=True)
     return redirect(request.args.get('next') if request.args.get('next') else '/employee')
+
+@app.route('/employee-fgPassword', methods=['post', 'get'])
+def reset_employee_password():
+    msg = ""
+    err = ""
+    if current_user.is_authenticated:
+        return redirect(url_for('change_password_employee'))
+    if request.method == "POST":
+        employee = utils.get_employees(phone=request.form.get('phone'))
+        if employee:
+            if utils.employee_change_password(employee=employee, newpwd=request.form.get('password')):
+                msg = "Reset password success!"
+            else:
+                err = "Something wrong! Please try again!"
+        else:
+            err = "Check your phone number!"
+    return render_template('employee/forgetpw.html', msg=msg, isEmp=True, error=err)
+
+@app.route('/fgPassword', methods=['post', 'get'])
+def reset_password():
+    msg = ""
+    err = ""
+    if session['customer_acc']:
+        return redirect(url_for('change_password_customer'))
+    if request.method == "POST":
+        customer = utils.get_customers(phone=request.form.get('phone'))
+        if customer:
+            if utils.customer_change_password(customer=customer, newpwd=request.form.get('password')):
+                msg = "Reset password success!"
+            else:
+                err = "Something wrong! Please try again!"
+        else:
+            err = "Check your phone number!"
+    return render_template('forgetpw.html', msg=msg, error=err)
+
 
 @app.route('/login', methods=['get', 'post'])
 def login_customer():
@@ -179,25 +214,8 @@ def show_flight():
 @app.route('/manage-flight-route')
 @login_employee_required
 def route():
-    fr = Flights.query.all()
-    list_route = []
-
-    for i in fr:
-        name1 = Airports.query.add_columns(Airports.airportName).filter(i.idStartAirport == Airports.id).one()
-        name2 = Airports.query.add_columns(Airports.airportName).filter(i.idDestinationAirport == Airports.id).one()
-        dic = {
-            'id': i.id,
-            'name1': name1[1],
-            'name2': name2[1],
-            'takeOffTime': i.takeOffTime,
-            'noBusinessClass': i.noBusinessClass,
-            'priceBusinessClass': i.priceBusinessClass,
-            'noEconomyClass': i.noEconomyClass,
-            'priceEconomyClass': i.priceEconomyClass
-        }
-        list_route.append(dic)
-
-    return render_template('/manage-flight-route.html', list_route=list_route)
+    flights = utils.get_flights(flew=True)
+    return render_template('/manage-flight-route.html', isEmp=True, list_route=flights)
 
 @app.route('/booking/<fid>', methods=['GET', 'POST'])
 @login_employee_required
@@ -316,36 +334,24 @@ def schedule_employee(id):
 
 @app.route('/flight-detail/<id>')
 def schedule_customer(id):
+    isEmp = request.args.get("isEmp")
     flight = utils.get_flights(id=id)
     slot = utils.get_slot_remain(id)
     stopovers = utils.get_stopover_detail(fid=id)
     return render_template('schedule.html',
                            flight=flight,
                            slot=slot,
+                           isEmp=isEmp,
                            stopovers=stopovers)
 
 @app.route('/manage-customer')
 @login_employee_required
 def manage_customer():
-    l_cus = Customers.query.all()
-    list_customer = []
-
-    for i in l_cus:
-        dic = {
-            'id': i.id,
-            'customerName': i.customerName,
-            'dob': i.dob,
-            'gender': i.gender,
-            'idNo': i.idNo,
-            'phone': i.phone,
-            'address': i.address
-        }
-        list_customer.append(dic)
-
-    return render_template('/employee/manage-customer.html', list_customer=list_customer)
+    customers = utils.get_customers()
+    return render_template('/employee/manage-customer.html', isEmp=True, list_customer=customers)
 
 
-@app.route('/add-customer',methods=['GET', 'POST'])
+@app.route('/add-customer', methods=['GET', 'POST'])
 @login_employee_required
 def add_customer():
     msg = ''
@@ -360,7 +366,7 @@ def add_customer():
         except Exception as ex:
             print(ex.args)
             err = "Something wrong! Please try again!"
-    return render_template('/employee/add-customer.html', err=err, msg=msg)
+    return render_template('/employee/add-customer.html', isEmp=True, err=err, msg=msg)
 
 @app.route('/changePwEmp', methods=['GET', 'POST'])
 @login_employee_required
@@ -414,7 +420,7 @@ def edit_employee_profile():
             if data['avatar']:
                 cloudinary.uploader.destroy(info['public_id'])
 
-    return render_template('/profileEmp.html',isEmp=True,mes=mes)
+    return render_template('/profileEmp.html', isEmp=True, mes=mes)
 
 @app.route('/profile', methods=['post', 'get'])
 @login_customer_required
@@ -445,7 +451,8 @@ def edit_customer_profile():
 
 @app.route('/about-us')
 def about_us():
-    return render_template('/about-us.html')
+    isEmp = request.args.get('isEmp')
+    return render_template('/about-us.html', isEmp=isEmp)
 
 @app.errorhandler(404)
 def not_found(e):

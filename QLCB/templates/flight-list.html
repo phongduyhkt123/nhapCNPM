@@ -9,7 +9,7 @@
 <script src="{{url_for('static', filename='js/main.js')}}"></script>
 <div class="forms">
     <h2>FLIGHT LIST</h2>
-    <form action="/flight-list" method="post">
+    <form action="" method="post">
         <div class="row topic-label">
             <div class="col-md-3 col-xs-15">
                 <label>Departure Airport</label>
@@ -61,12 +61,18 @@
                            {% endif %}
                         >Booking
                         </a> &nbsp;
-                        <a href="/flight-detail/{{f.id}}" class="btn btn-page">More detail</a>
+                        <a class="btn btn-page"
+                           {% if isEmp %}
+                           href="/flight-detail/{{f.id}}?isEmp=1"
+                           {% else %}
+                           href="/flight-detail/{{f.id}}"
+                           {% endif %}
+                        >More detail</a>
                     </div>
-                    <p class="card-text">Economy Class Ticket: {{f.noEconomyClass -
-                        slots[f.id]['economy']}}/{{f.noEconomyClass}} </p>
                     <p class="card-text">Business Class Ticket: {{f.noBusinessClass -
                         slots[f.id]['business']}}/{{f.noBusinessClass}}</p>
+                    <p class="card-text">Economy Class Ticket: {{f.noEconomyClass -
+                        slots[f.id]['economy']}}/{{f.noEconomyClass}} </p>
                     <p class="card-text">Take off time: {{f.takeOffTime}}</p>
                 </div>
             </div>
@@ -84,7 +90,13 @@
                                  {% endif %}
                                  onclick="previousPage({{page_cur}})">Previous</a></li>
         {% for i in range(1, page_num + 1) %}
-        <li class="page-item"><a id="page{{i}}" class="page-link" href="flight-list?page={{i}}">{{i}}</a></li>
+        <li class="page-item"><a id="page{{i}}"
+                                 {% if isEmp %}
+                                 href="manage-flight-list?page={{i}}"
+                                 {% else %}
+                                 href="flight-list?page={{i}}"
+                                 {% endif %}
+                                 class="page-link" >{{i}}</a></li>
         {% endfor %}
         <li class="page-item"><a class="btn page-link btn-page"
                                  {% if page_cur== page_num %}

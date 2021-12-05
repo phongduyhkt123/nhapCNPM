@@ -53,6 +53,7 @@ function pay(){
 function checkBooking(maxE, maxB){
     const economy = document.getElementById('noEconomy')
     const business = document.getElementById('noBusiness')
+    const customer = document.getElementById("sl1")
     var valid = false
     if (isNaN(economy.value) || parseInt(economy.value) < 0){
         economy.setCustomValidity("not valid")
@@ -69,21 +70,29 @@ function checkBooking(maxE, maxB){
     else if(parseInt(economy.value) > maxE){
         economy.setCustomValidity("not enough tickets")
     }
+    else if(customer.value == "0"){
+        customer.setCustomValidity("Please choose a customer!")
+    }
     else {
-        business.setCustomValidity("")
-        economy.setCustomValidity("")
         valid = true
     }
     economy.reportValidity()
     business.reportValidity()
+    customer.reportValidity()
     return valid
 }
 
 
 function getTotalPrice(Eprice, Bprice){
     try {
-        let nE = parseInt(document.getElementById('noEconomy').value) // số lượng vé Economy
-        let nB = parseInt(document.getElementById('noBusiness').value) // số lượng vé Business
+        let nE = document.getElementById('noEconomy').value
+        let nB = document.getElementById('noBusiness').value
+        if (nE == "")
+            nE = "0"
+        if (nB == "")
+            nB = "0"
+        nE = parseInt(nE) // số lượng vé Economy
+        nB = parseInt(nB) // số lượng vé Business
         if(nE >= 0 && nB >=0) {
             let total = nE * Eprice + nB * Bprice
             document.getElementById('total').value = total.toString()
@@ -135,5 +144,9 @@ function loadCustomer(customers){
             document.getElementById("idNo").value = customers[i]["idNo"]
             break;
         }
+    }
+    if(cid == "0"){
+        document.getElementById("phone").value = ""
+        document.getElementById("idNo").value = ""
     }
 }

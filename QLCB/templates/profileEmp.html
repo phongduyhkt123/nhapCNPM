@@ -37,11 +37,14 @@
                         <h3 class="text-center">Profile Information</h3>
                     </div>
                     <div class="row mt-3">
-                        <div class="col-md-12"><h5 class="labels">Username</h5>
+                        <div class="col-md-12"><h5 class="labels">Username <i class='bx bx-badge-check'
+                                                                                  style='color:#b90000'></i></h5>
                             <input type="text" name="username" class="form-control" placeholder="Enter username"
                                    value="{{current_user.username}}" readonly>
                         </div>
-                        <div class="col-md-12"><h5 class="labels">Name <i class='bx bx-badge-check' style='color:#b90000'></i></h5>
+                        <div class="col-md-12"><h5 class="labels">Name <i class='bx bx-badge-check'
+                                                                          style='color:#b90000'
+                                                                          title="Please fill out this field"></i></h5>
                             <input type="text" name="employeeName" class="form-control" placeholder="Enter your name"
                                    value="{{current_user.employeeName}}" required>
                         </div>
@@ -78,12 +81,16 @@
                                    {% endif %}
                                    placeholder="Enter email">
                         </div>
-                        <div class="col-md-12"><h5 class="labels">Phone Number</h5>
+                        <div class="col-md-12"><h5 class="labels">Phone Number <i class='bx bx-badge-check'
+                                                                                  style='color:#b90000'
+                                                                                  title="Please fill out this field"></i>
+                        </h5>
                             <input type="text" name="phone" class="form-control"
                                    {% if current_user.phone %}
                                    value="{{current_user.phone}}"
                                    {% endif %}
-                                   placeholder="Enter phone">
+                                   placeholder="Enter phone"
+                                   required>
                         </div>
                         <div class="col-md-12"><h5 class="labels">Address</h5>
                             <input type="text" name="address" class="form-control"
