@@ -1,4 +1,4 @@
-<link href="../static/css/DetailFlight.css" rel="stylesheet"/>
+<link href="../static/css/Schedule.css" rel="stylesheet"/>
 {% if isEmp %}
 {% extends 'layouts/baseEmp.html' %}
 {% else %}
@@ -13,25 +13,19 @@
         {% if flight %}
         <div class="form-group">
             <label for="idf">ID Flight:</label>
-            <input type="text" class="form-control col-md-8" name="IDFlight" id="idf" value="{{flight.id}}" readonly>
-            <br>
-            <label>Departure Airport:</label>
-            <input type="text" class="form-control col-md-8" value="{{flight.startAirport}}" readonly>
-            <br>
-            <label>Destination Airport:</label>
-            <input type="text" class="form-control col-md-8" value="{{flight.destinationAirport}}" readonly>
-            <br>
+            <input type="text" class="form-control" name="IDFlight" id="idf" value="{{flight.id}}" readonly>
+            <label>Departure airport:</label>
+            <input type="text" class="form-control" value="{{flight.startAirport}}" readonly>
+            <label>Destination airport:</label>
+            <input type="text" class="form-control" value="{{flight.destinationAirport}}" readonly>
             <label for="dte-begin">Take off time:</label>
             <input class="form-control" id="dte-begin" value="{{flight.takeOffTime}}" readonly>
-            <br>
             <label for="time-begin">Flight time (mins):</label>
             <input type="text" class="form-control" id="time-begin" value="{{flight.flightTime}}" readonly>
-            <br>
-            <label for="amt1">Number of economyclass tickets:</label>
+            <label for="amt1">Number of economy class tickets:</label>
             <input type="text" class="form-control" id="amt1"
                    value="{{flight.noEconomyClass - slot['economy']}} / {{flight.noEconomyClass}}" readonly>
-            <br>
-            <label for="amt2">Number of businessclass tickets:</label>
+            <label for="amt2">Number of business class tickets:</label>
             <input type="text" class="form-control" id="amt2"
                    value="{{flight.noBusinessClass - slot['business']}} / {{flight.noBusinessClass}}" readonly>
             <br>

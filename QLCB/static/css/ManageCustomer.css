@@ -5,10 +5,10 @@
     outline : none;
 }
 h2{
-text-align :center;
-padding : 10px;
-font-size : 30px;
-color : #1b223c;
+    text-align :center;
+    padding : 10px;
+    font-size : 30px;
+    color : #1b223c;
 }
 
 .form{
@@ -53,21 +53,13 @@ color : #1b223c;
 }
 
 .table-fixed .col1{
-    width : 5%;
+    width : 10%;
 
 }
 .table-fixed .col2{
-    width : 18%;
-
-}
-.table-fixed .col3{
-    width : 19%;
-
-}
-.table-fixed .col4{
     width : 20%;
-
 }
+
 .table-fixed tbody {
     display : block;
     height : 250px;
@@ -78,4 +70,28 @@ color : #1b223c;
     display: flex;
     flex-direction: row;
     align-items: center;
+}
+
+.button {
+    padding: 10px;
+}
+
+.add-btn {
+    background: #1b223c;
+    box-shadow: none;
+    border: none
+}
+
+.add-btn:hover {
+    background: #2a355d;
+}
+
+.add-btn: focus {
+    background: #1b223c;
+    box-shadow: none
+}
+
+.add-btn: active {
+    background: #1b223c;
+    box-shadow: none
 }

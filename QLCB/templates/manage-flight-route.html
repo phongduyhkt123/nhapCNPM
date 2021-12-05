@@ -15,8 +15,8 @@
                         <th class="col2">Departure Airport</th>
                         <th class="col2">Destination Airport</th>
                         <th class="col3">Take off Time</th>
-                        <th class="col4">Number of BC tickets<br>(Price/ticket)</br></th>
-                        <th class="col4">Number of EC tickets<br>(Price/ticket)</br></th>
+                        <th class="col4">No Business Class tickets</th>
+                        <th class="col4">No Business Class tickets</th>
                     </tr>
                     </thead>
 
@@ -28,19 +28,12 @@
                         <td class="col2">{{f.name1}}</td>
                         <td class="col2">{{f.name2}}</td>
                         <td class="col3">{{f.takeOffTime}}</td>
-                        <td class="col4">{{f.noBusinessClass}}<br>({{f.priceBusinessClass}})</br></td>
-                        <td class="col4">{{f.noEconomyClass}}<br>({{f.priceEconomyClass}})</br></td>
+                        <td class="col4">{{f.noBusinessClass}}</td>
+                        <td class="col4">{{f.noEconomyClass}}</td>
                     </tr>
                     {% endfor %}
                     {% else %}
-                    <tr>
-                        <td class="col1">ĐN-HN</td>
-                        <td class="col2">ĐN</td>
-                        <td class="col2">HN</td>
-                        <td class="col3">7h30</td>
-                        <td class="col4">30</td>
-                        <td class="col4">20</td>
-                    </tr>
+                    <div class="alert alert-info"> Don't have any flight route!</div>
                     {% endif %}
                     </tbody>
                 </table>

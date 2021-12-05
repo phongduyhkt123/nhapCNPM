@@ -102,7 +102,6 @@ function prebook(takeOffTime, dateRule, id, nextUrl) {
     else{
         location.replace(nextUrl);
     }
-
 }
 
 
@@ -111,3 +110,30 @@ function addDays(date, number) {
     return new Date(newDate.setDate(date.getDate() + number));
 }
 
+function showImage(event){
+    let imgCon = document.getElementById('avt')
+    let files = event.target.files[0]
+    if(files){
+        imgCon.src = URL.createObjectURL(files)
+    }
+}
+
+function nextPage(page_cur){
+    var nextTag = document.getElementById("page"+(page_cur+1).toString())
+    window.location.href = nextTag.href;
+}
+function previousPage(page_cur){
+    var nextTag = document.getElementById("page"+(page_cur-1).toString())
+    window.location.href = nextTag.href;
+}
+
+function loadCustomer(customers){
+    var cid = document.getElementById("sl1").value
+    for (let i =0; i< customers.length; i++){
+        if (customers[i]['id'].toString() == cid){
+            document.getElementById("phone").value = customers[i]["phone"]
+            document.getElementById("idNo").value = customers[i]["idNo"]
+            break;
+        }
+    }
+}

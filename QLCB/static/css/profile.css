@@ -10,7 +10,7 @@
 }
 
 .profile-button:hover, .pw-button:hover {
-    background: #1b223c;
+    background: #2a355d;
 }
 
 .profile-button:focus, .pw-button: focus {
@@ -42,35 +42,25 @@
     left: 0;
 }
 
-.back:hover {
-    color: #1b223c;
-    cursor: pointer
-}
-h3{
-    color: #1b223c;
-}
-h5 {
-    font-family: "Roboto", sans-serif;
-    font-size: 14px;
-    color: #1b223c;
-}
-
 .custom-form .profile-info h3{
     width: 100%;
     text-align: center;
 }
 
-.custom-form input{
+.custom-form input, .custom-form select {
     margin-bottom: 10px !important;
     margin-top: 5px !important;
 }
 
-.add-experience:hover {
-    background: #BA68C8;
-    color: #fff;
-    cursor: pointer;
-    border: solid 1px #BA68C8
+h3{
+    color: #1b223c;
 }
+h5 {
+    font-family: "Roboto", sans-serif;
+    font-size: 16px;
+    color: #1b223c;
+}
+
 #avt {
     width: 200px;
     height: 300px;

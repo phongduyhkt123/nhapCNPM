@@ -1,4 +1,5 @@
-from models import Airports, Flights, Stopovers, StopoverDetails, Roles, Employees, BookDetails, PaymentMethods, Customers, Tickets, TicketTypes
+from models import Airports, Flights, Stopovers, StopoverDetails, Roles, Employees, BookDetails, PaymentMethods, \
+    Customers, Tickets, TicketTypes, Rules
 from flask_admin.contrib.sqla import ModelView
 from flask_admin import BaseView, expose, AdminIndexView
 from flask_login import current_user, logout_user
@@ -75,16 +76,16 @@ class FlightModelView(AuthenticatedModelView):
                          destinationAirport='Arrival airport')
 
     def create_model(self, form):
-        if form.flightTime.data < app.config["MIN_FLIGHT_TIME"]:
-            flash('The minimum allowed flight time is ' + str(app.config["MIN_FLIGHT_TIME"]) + ' mins',
+        if form.flightTime.data < utils.get_rules(name="MIN_FLIGHT_TIME").value:
+            flash('The minimum allowed flight time is ' + str(utils.get_rules(name="MIN_FLIGHT_TIME").value) + ' mins',
                   'error')
             return False
         return super().create_model(form)
 
 
     def update_model(self, form, model):
-        if form.flightTime.data < app.config["MIN_FLIGHT_TIME"]:
-            flash('The minimum allowed flight time is ' + str(app.config["MIN_FLIGHT_TIME"]) + ' mins',
+        if form.flightTime.data < utils.get_rules(name="MIN_FLIGHT_TIME").value:
+            flash('The minimum allowed flight time is ' + str(utils.get_rules(name="MIN_FLIGHT_TIME").value) + ' mins',
                   'error')
             return False
         else:
@@ -109,14 +110,14 @@ class StopoverDetailModelView(AuthenticatedModelView):
                          description='Description')
 
     def create_model(self, form):
-        if form.stopoverTime.data > app.config["MAX_TIME_STOPOVER_PER_FLIGHT"] and form.stopoverTime.data < app.config["MIN_TIME_STOPOVER_PER_FLIGHT"]:
+        if form.stopoverTime.data > utils.get_rules(name="MAX_TIME_STOPOVER_PER_FLIGHT").value or form.stopoverTime.data < utils.get_rules(name="MIN_TIME_STOPOVER_PER_FLIGHT").value:
             flash('The maximum allowed flight time is from ' +
-                  str(app.config["MIN_TIME_STOPOVER_PER_FLIGHT"]) + ' to ' +
-                  str(app.config["MAX_TIME_STOPOVER_PER_FLIGHT"]) + ' mins',
+                  str(utils.get_rules(name="MIN_TIME_STOPOVER_PER_FLIGHT").value) + ' to ' +
+                  str(utils.get_rules(name="MAX_TIME_STOPOVER_PER_FLIGHT").value) + ' mins',
                   'error')
             return False
 
-        l = app.config["MAX_STOPOVER_PER_FLIGHT"]
+        l = utils.get_rules(name="MAX_STOPOVER_PER_FLIGHT").value
         c = db.session.query(func.count(StopoverDetails.idFlight)).filter(
             StopoverDetails.idFlight == form.flight.data.id).scalar()
         if c >= l:
@@ -126,11 +127,15 @@ class StopoverDetailModelView(AuthenticatedModelView):
             return super().create_model(form)
 
     def update_model(self, form, model):
-        if form.stopoverTime.data > app.config["MAX_TIME_STOPOVER_PER_FLIGHT"]:
-            flash('The maximum allowed flight time is ' + str(app.config["MAX_TIME_STOPOVER_PER_FLIGHT"]) + ' mins', 'error')
+        if form.stopoverTime.data > utils.get_rules(name="MAX_TIME_STOPOVER_PER_FLIGHT").value:
+            flash('The maximum allowed flight time is ' + str(utils.get_rules("MAX_TIME_STOPOVER_PER_FLIGHT").value) + ' mins', 'error')
+            return False
+        elif form.stopoverTime.data < utils.get_rules(name="MIN_TIME_STOPOVER_PER_FLIGHT").value:
+            flash('The minimum allowed flight time is ' + str(utils.get_rules("MIN_TIME_STOPOVER_PER_FLIGHT").value) + ' mins', 'error')
             return False
         else:
             return super().update_model(form, model)
+
 
 class BookDetailModelView(AuthenticatedModelView):
     column_exclude_list = ('tickets')
@@ -148,7 +153,7 @@ class BookDetailModelView(AuthenticatedModelView):
             flash('The total number of tickets must be more than 0', 'error')
             return False
 
-        l = app.config["MAX_DATE_ALLOWED_BOOKING_BEFORE_TAKEOFF"]
+        l = utils.get_rules(name="MAX_DATE_ALLOWED_BOOKING_BEFORE_TAKEOFF").value
         if (form.flight.data.takeOffTime.date() - form.bookTime.data.date()).days < l:
             flash(
                 'This flight cannot be booked because the flight has already taken off/reservation must be made prior to departure date ' + str(l) + ' day',
@@ -269,17 +274,20 @@ class LogoutView(AuthenticatedBaseView):
         logout_user()
         return redirect('/admin')
 
+class RuleModelView(AuthenticatedModelView):
+    pass
+
 admin.add_view(RoleModelView(Roles, db.session, name='Roles'))
 admin.add_view(EmployeeModelView(Employees, db.session, name='Employees'))
 admin.add_view(CustomerModelView(Customers, db.session, name='Customers'))
+admin.add_view(RuleModelView(Rules, db.session, name='Rules'))
 admin.add_view(AirportModelView(Airports, db.session, name='Airports'))
 admin.add_view(FlightModelView(Flights, db.session, name='Flights'))
-
 admin.add_view(StopoverModelView(Stopovers, db.session, name='Stopovers'))
 admin.add_view(StopoverDetailModelView(StopoverDetails, db.session, name='Stopover details'))
 admin.add_view(BookDetailModelView(BookDetails, db.session, name='Book details'))
 admin.add_view(TicketTypeModelView(TicketTypes, db.session, name='Ticket types'))
 admin.add_view(TicketModelView(Tickets, db.session, name='Tickets'))
-admin.add_view(PaymentMethodModelView(PaymentMethods, db.session, name='Payment methods'))
+admin.add_view(PaymentMethodModelView(PaymentMethods, db.session, name='Payment'))
 admin.add_view(ReportView(name="Report"))
 admin.add_view(LogoutView(name="Log out"))

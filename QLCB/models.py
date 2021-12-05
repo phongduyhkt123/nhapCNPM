@@ -1,9 +1,7 @@
-
 from QLCB import db
 from sqlalchemy import Column, Integer, String, Float, ForeignKey, NVARCHAR, DateTime, Date
 from sqlalchemy.orm import relationship
 from flask_login import UserMixin
-
 
 class Roles(db.Model):
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -17,14 +15,17 @@ class Roles(db.Model):
 class Employees(db.Model, UserMixin):
     id = Column(Integer, primary_key=True, autoincrement=True)
     username = Column(String(100), nullable=False, unique=True)
-    password = Column(String(64), nullable=False)
     employeeName = Column(NVARCHAR(100), nullable=False)
-    email = Column(String(100), unique=True)
-    gender = Column(String(10))
-    age = Column(Integer)
     dob = Column(Date)
-
+    gender = Column(String(10))
+    idNo = Column(String(100), unique=True)
+    email = Column(String(100), unique=True)
+    phone = Column(String(10), unique=True, nullable=False)
+    password = Column(String(64), nullable=False)
+    address = Column(NVARCHAR(200))
+    avatar = Column(String(100))
     idRole = Column(Integer, ForeignKey(Roles.id), nullable=False)
+
     bookDetails = relationship('BookDetails', backref='employee', lazy=True)
 
     def __str__(self):
@@ -33,10 +34,10 @@ class Employees(db.Model, UserMixin):
 class Customers(db.Model):
     id = Column(Integer, primary_key=True, autoincrement=True)
     customerName = Column(NVARCHAR(100), nullable=False)
-    phone = Column(String(10), unique=True, nullable=False)
-    age = Column(Integer)
+    dob = Column(Date)
     gender = Column(String(10))
     idNo = Column(String(100), unique=True)
+    phone = Column(String(10), unique=True, nullable=False)
     password = Column(String(64), nullable=False)
     address = Column(NVARCHAR(200))
     avatar = Column(String(100))
@@ -115,6 +116,8 @@ class BookDetails(db.Model):
     idCustomer = Column(Integer, ForeignKey(Customers.id), nullable=False)
     idEmployee = Column(Integer, ForeignKey(Employees.id))
     idPMethod = Column(Integer, ForeignKey(PaymentMethods.id), nullable=False)
+    status = Column(Integer, default=1)
+    orderKey = Column(NVARCHAR(100), unique=True)
 
     tickets = relationship('Tickets', cascade="all,delete", backref='bookDetail', lazy=True)
 
@@ -136,7 +139,30 @@ class Tickets(db.Model):
     idType = Column(Integer, ForeignKey(TicketTypes.id), nullable=False)
     idBookDetail = Column(Integer, ForeignKey(BookDetails.id), nullable=False)
 
+class Rules(db.Model):
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    ruleName = Column(NVARCHAR(100), nullable=False)
+    value = Column(Integer)
+    description = Column(NVARCHAR(100))
+
+    def __str__(self):
+        return self.ruleName
+
 if __name__ == '__main__':
     db.create_all()
+
+    db.session.add(TicketTypes(typeName="Business Class"))
+    db.session.add(TicketTypes(typeName="Economy Class"))
+
+    db.session.add(Rules(ruleName="MIN_FLIGHT_TIME",value=30))
+    db.session.add(Rules(ruleName="MAX_STOPOVER_PER_FLIGHT",value=2))
+    db.session.add(Rules(ruleName="MIN_TIME_STOPOVER_PER_FLIGHT",value=10))
+    db.session.add(Rules(ruleName="MAX_TIME_STOPOVER_PER_FLIGHT",value=20))
+    db.session.add(Rules(ruleName="MAX_DATE_ALLOWED_BOOKING_BEFORE_TAKEOFF",value=1))
+
+    try:
+        db.session.commit()
+    except Exception as ex:
+        print(ex.args)
 
 
